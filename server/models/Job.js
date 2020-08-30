@@ -4,6 +4,7 @@ const JobSchema = new mongoose.Schema({
   customer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'customer',
+    required: 'Please select a customer for this job. '
   },
   location: {
     street: {
@@ -20,13 +21,8 @@ const JobSchema = new mongoose.Schema({
     },
   },
   jobType: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-  payType: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'jobType'
   },
   scheduledDate: {
     type: Date,
@@ -38,7 +34,13 @@ const JobSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  listOfEmployees: [
+  scheduledEmployees: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'employee',
+    }
+  ],
+  employeesThatWorked: [
     {
       employee: {
         type: mongoose.Schema.Types.ObjectId,
@@ -50,7 +52,10 @@ const JobSchema = new mongoose.Schema({
     },
   ],
   vendor: {
-    type: String,
+    vendorName:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'vendor'
+    },
   },
   listOfMaterials: [
     {
@@ -58,6 +63,9 @@ const JobSchema = new mongoose.Schema({
       ref: 'material',
     },
   ],
+  notes: {
+    type: String,
+  }
 });
 
 module.exports = mongoose.model('job', JobSchema);
