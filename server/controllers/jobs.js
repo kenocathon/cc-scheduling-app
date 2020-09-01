@@ -7,7 +7,7 @@ const errorHandler = require('../helpers/dbErrorHandler');
 module.exports = {
   scheduleJob: async (req, res) => {
     const job = new Job(req.body);
-    const customer = Customer.findById(job.customer.id);
+    const customer = await Customer.findById(job.customer);
     try {
       if (job.scheduledDate) {
         job.status = 'Scheduled';
@@ -61,9 +61,9 @@ module.exports = {
 
   listJobs: async (req, res) => {
     try {
-      let job = await Job.find().populate(
-        'customer scheduledEmployees employeesThatWorked vendor listOfSavedMaterials addedMaterials status'
-      );
+      let job = await Job.find().select(
+        'customer scheduledEmployees status'
+      ).populate('customer scheduledEmployees');
       res.json(job);
     } catch (err) {
       return res.status(500).json({

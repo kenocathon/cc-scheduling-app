@@ -32,7 +32,7 @@ userRouter
   .delete(employeeCtrl.removeEmployee);
 
 //******JOB ROUTES
-userRouter.route('/jobs/').post(jobCtrl.scheduleJob).get(jobCtrl.listJobs);
+userRouter.route('/jobs').post(jobCtrl.scheduleJob).get(jobCtrl.listJobs);
 
 //SINGLE JOB
 userRouter

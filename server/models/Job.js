@@ -22,7 +22,12 @@ const JobSchema = new mongoose.Schema({
   },
   jobType: {
     type: String,
+    trim: true,
+  },
+  payType: {
+    type: String,
     enum: ['Daily', 'Hourly', 'Salary'],
+
   },
   scheduledDate: {
     type: Date,

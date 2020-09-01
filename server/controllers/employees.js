@@ -1,5 +1,4 @@
 const Employee = require('../models/Employee');
-const Job = require('../models/Job');
 const errorHandler = require('../helpers/dbErrorHandler');
 
 module.exports = {
