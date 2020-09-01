@@ -1,7 +1,5 @@
 const Job = require('../models/Job');
 const Customer = require('../models/Customer');
-const Employee = require('../models/Employee');
-const Vendor = require('../models/Vendor');
 const errorHandler = require('../helpers/dbErrorHandler');
 
 module.exports = {
@@ -45,12 +43,11 @@ module.exports = {
     }
   },
 
-  singleJob: (req, res) => {
+  singleJob: async (req, res) => {
     try {
-      const job = req.job.populate(
-        'customer scheduledEmployees employeesThatWorked vendor listOfSavedMaterials addedMaterials status'
-      );
-      return res.json(req.employee);
+      const {jobId} = req.params
+      const job = await Job.findById(jobId).populate('customer scheduledEmployees employeesThatWorked vendor materials').populate('listOfSavedMaterials');
+      return res.json(job);
     } catch (err) {
       console.error(err);
       return res.status(500).json({
@@ -61,9 +58,7 @@ module.exports = {
 
   listJobs: async (req, res) => {
     try {
-      let job = await Job.find().select(
-        'customer scheduledEmployees status'
-      ).populate('customer scheduledEmployees');
+      let job = await Job.find().select('customer location jobType scheduledDate completedDate status');
       res.json(job);
     } catch (err) {
       return res.status(500).json({
@@ -91,7 +86,7 @@ module.exports = {
       let job = req.job;
       let deletedJob = await job.remove();
       res.status(200).json({
-        message: `${deletedJob.firstName} was successfully removed from job list`,
+        message: `Selected job was successfully removed from job list`,
       });
     } catch (err) {
       console.error(err);

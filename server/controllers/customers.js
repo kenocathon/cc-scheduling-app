@@ -11,7 +11,20 @@ module.exports = {
       });
     } catch (err) {
       console.error(err);
-      return res.status(400).json({
+      return res.status(500).json({
+        error: errorHandler.getErrorMessage(err),
+      });
+    }
+  },
+
+  listCustomers: async (req, res) => {
+    try {
+      let customers = await Customer.find().select(
+        'firstName lastName email listOfJobs'
+      );
+      res.json(customers);
+    } catch (err) {
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }
@@ -39,20 +52,7 @@ module.exports = {
       return res.json(req.customer);
     } catch (err) {
       console.error(err);
-      return res.status(400).json({
-        error: errorHandler.getErrorMessage(err),
-      });
-    }
-  },
-
-  listCustomers: async (req, res) => {
-    try {
-      let customers = await Customer.find().select(
-        'firstName lastName email listOfJobs'
-      );
-      res.json(customers);
-    } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }
@@ -66,7 +66,7 @@ module.exports = {
       res.status(200).json(customer);
     } catch (err) {
       console.error(err);
-      return res.status(400).json({
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }
@@ -79,7 +79,7 @@ module.exports = {
       res.json(deletedCustomer);
     } catch (err) {
       console.error(err);
-      return res.status(400).json({
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }

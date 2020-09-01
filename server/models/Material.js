@@ -6,12 +6,10 @@ const MaterialSchema = new mongoose.Schema({
     trim: true,
     required: "Material name is required"
   },
-  materialCost: {
+  description: {
     type: String,
     trim: true,
-  },
-  vendorName: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'vendor'
-  },
+  }
 })
+
+module.exports = mongoose.model('material', MaterialSchema);
