@@ -1,5 +1,5 @@
 const Customer = require('../models/Customer');
-const errorHandler = require('../helpers/dbErrorHandler')
+const errorHandler = require('../helpers/dbErrorHandler');
 
 module.exports = {
   createCustomer: async (req, res) => {
@@ -7,13 +7,13 @@ module.exports = {
     try {
       await customer.save();
       return res.status(200).json({
-        message: 'New customer was created'
-      })
+        message: 'New customer was created',
+      });
     } catch (err) {
       console.error(err);
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err)
-      })
+        error: errorHandler.getErrorMessage(err),
+      });
     }
   },
 
@@ -27,7 +27,7 @@ module.exports = {
       req.customer = customer;
       next();
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return res.status('400').json({
         error: 'Could not retrieve customer',
       });
@@ -38,7 +38,7 @@ module.exports = {
     try {
       return res.json(req.customer);
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return res.status(400).json({
         error: errorHandler.getErrorMessage(err),
       });
@@ -48,7 +48,7 @@ module.exports = {
   listCustomers: async (req, res) => {
     try {
       let customers = await Customer.find().select(
-        'firstName lastName email'
+        'firstName lastName email listOfJobs'
       );
       res.json(customers);
     } catch (err) {
@@ -84,4 +84,4 @@ module.exports = {
       });
     }
   },
-}
+};

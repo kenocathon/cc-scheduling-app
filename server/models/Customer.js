@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const CustomerSchema = new mongoose.Schema({
+  companyName: {
+    type: String,
+    trim: true,
+  },
   firstName: {
     type: String,
     trim: true,

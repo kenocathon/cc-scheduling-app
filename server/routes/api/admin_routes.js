@@ -1,17 +1,16 @@
 const express = require('express');
-const userCtrl = require('../../controllers/users')
+const userCtrl = require('../../controllers/users');
 
 const adminRouter = express.Router();
 
-adminRouter.route('/user')
-  .post(userCtrl.createUser)
-  .get(userCtrl.list)
+adminRouter.route('/users').post(userCtrl.createUser).get(userCtrl.list);
 
-adminRouter.route('/user/:userId')
+adminRouter
+  .route('/user/:userId')
   .get(userCtrl.read)
   .put(userCtrl.update)
-  .delete(userCtrl.remove)
+  .delete(userCtrl.remove);
 
 adminRouter.param('userId', userCtrl.userByID);
 
-  module.exports = adminRouter;
+module.exports = adminRouter;

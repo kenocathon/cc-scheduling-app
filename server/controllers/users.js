@@ -1,18 +1,19 @@
 const User = require('../models/User');
 
 module.exports = {
-  createUser: async(req, res) => {
+  createUser: async (req, res) => {
     const user = new User(req.body);
     try {
+      console.log('post request received');
       await user.save();
       return res.status(200).json({
-        message: `New user with username ${user.userName} was created`
-      })
+        message: `New user with username ${user.userName} was created`,
+      });
     } catch (err) {
       console.error(err);
       return res.status(400).json({
-        error: errorHandler.getErrorMessage(err)
-      })
+        error: errorHandler.getErrorMessage(err),
+      });
     }
   },
   userByID: async (req, res, next, id) => {
@@ -45,9 +46,7 @@ module.exports = {
 
   list: async (req, res) => {
     try {
-      let users = await User.find().select(
-        'userName firstName lastName email'
-      );
+      let users = await User.find().select('userName firstName lastName email');
       res.json(users);
     } catch (err) {
       return res.status(400).json({
@@ -86,4 +85,4 @@ module.exports = {
       });
     }
   },
-}
+};
