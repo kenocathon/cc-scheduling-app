@@ -2,8 +2,11 @@ const express = require('express');
 const customerCtrl = require('../../controllers/customers');
 const employeeCtrl = require('../../controllers/employees');
 const jobCtrl = require('../../controllers/jobs');
+const materialCtrl = require('../../controllers/materials')
+const vendorCtrl = require('../../controllers/vendors')
 
 const userRouter = express.Router();
+
 
 //*******CUSTOMER ROUTES
 userRouter
@@ -11,7 +14,7 @@ userRouter
   .post(customerCtrl.createCustomer)
   .get(customerCtrl.listCustomers);
 
-//SINGLE CUSTOMER
+//SINGLE CUSTOMER ROUTES
 userRouter
   .route('/customer/:customerId')
   .get(customerCtrl.singleCustomer)
@@ -24,7 +27,7 @@ userRouter
   .post(employeeCtrl.createEmployee)
   .get(employeeCtrl.listEmployees);
 
-//SINGLE EMPLOYEE
+//SINGLE EMPLOYEE ROUTES
 userRouter
   .route('/employee/:employeeId')
   .get(employeeCtrl.singleEmployee)
@@ -34,16 +37,43 @@ userRouter
 //******JOB ROUTES
 userRouter.route('/jobs').post(jobCtrl.scheduleJob).get(jobCtrl.listJobs);
 
-//SINGLE JOB
+//SINGLE JOB ROUTES
 userRouter
   .route('/job/:jobId')
   .get(jobCtrl.singleJob)
   .put(jobCtrl.updateJob)
   .delete(jobCtrl.removeJob);
 
+//******MATERIAL ROUTES
+userRouter
+  .route('/materials')
+    .post(materialCtrl.createSavedMaterial)
+    .get(materialCtrl.listSavedMaterials)
+
+//SINGLE MATERIAL ROUTES
+  .route('/material/:materialId')
+    .get(materialCtrl.singleSavedMaterial)
+    .put(materialCtrl.updateSavedMaterial)
+    .delete(materialCtrl.removeSavedMaterial)
+
+//*******VENDOR ROUTES
+userRouter
+  .route('/vendors')
+    .post(vendorCtrl.createVendor)
+    .get(vendorCtrl.singleVendor)
+
+//SINGLE VENDOR ROUTES
+userRouter
+  .route('/vendor/vendorId')
+    .get(vendorCtrl.singleVendor)
+    .put(vendorCtrl.updateVendor)
+    .delete(vendorCtrl.removeVendor)
+
 //PARAMS
 userRouter.param('customerId', customerCtrl.customerById);
 userRouter.param('empolyeeId', employeeCtrl.employeeById);
 userRouter.param('jobId', jobCtrl.jobById);
+userRouter.param('materialId', materialCtrl)
+userRouter.param('vendorId', vendorCtrl.vendorById)
 
 module.exports = userRouter;

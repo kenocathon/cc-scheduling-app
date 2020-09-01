@@ -2,7 +2,7 @@ const Vendor = require('../models/Vendor');
 const errorHandler = require('../helpers/dbErrorHandler');
 
 module.exports = {
-  
+
   createVendor: async (req, res) => {
     const vendor = new Vendor(req.body);
     try {
@@ -71,7 +71,7 @@ module.exports = {
     }
   },
 
-  removeVendro: async (req, res) => {
+  removeVendor: async (req, res) => {
     try {
       let vendor = req.vendor;
       let deletedVendor = await vendor.remove();

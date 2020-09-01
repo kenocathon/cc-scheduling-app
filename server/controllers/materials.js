@@ -44,7 +44,7 @@ module.exports = {
     }
   },
 
-  singleMaterial: async(req, res) => {
+  singleSavedMaterial: async(req, res) => {
     try {
       const material
       return res.json(req.material);
@@ -56,7 +56,7 @@ module.exports = {
     }
   },
 
-  updateMaterial: async(req, res) => {
+  updateSavedMaterial: async(req, res) => {
     try {
       let material = req.material;
       material = extend(material, req.body);
@@ -70,7 +70,7 @@ module.exports = {
     }
   },
 
-  deleteMaterial: async(req, res) => {
+  removeSavedMaterial: async(req, res) => {
     try {
       let material = req.material;
       let deletedMaterial = await material.remove();
