@@ -51,6 +51,7 @@ userRouter
     .get(materialCtrl.listSavedMaterials)
 
 //SINGLE MATERIAL ROUTES
+userRouter
   .route('/material/:materialId')
     .get(materialCtrl.singleSavedMaterial)
     .put(materialCtrl.updateSavedMaterial)
@@ -73,7 +74,7 @@ userRouter
 userRouter.param('customerId', customerCtrl.customerById);
 userRouter.param('empolyeeId', employeeCtrl.employeeById);
 userRouter.param('jobId', jobCtrl.jobById);
-userRouter.param('materialId', materialCtrl)
+userRouter.param('materialId', materialCtrl.materialById)
 userRouter.param('vendorId', vendorCtrl.vendorById)
 
 module.exports = userRouter;

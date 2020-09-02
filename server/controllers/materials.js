@@ -46,7 +46,6 @@ module.exports = {
 
   singleSavedMaterial: async(req, res) => {
     try {
-      const material
       return res.json(req.material);
     } catch (err) {
       console.error(err);

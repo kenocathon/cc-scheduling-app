@@ -1,4 +1,5 @@
 const Customer = require('../models/Customer');
+const {extend} = require('lodash')
 const errorHandler = require('../helpers/dbErrorHandler');
 
 module.exports = {
@@ -73,10 +74,16 @@ module.exports = {
   },
 
   removeCustomer: async (req, res) => {
+    let customer = req.customer;
     try {
-      let customer = req.customer;
-      let deletedCustomer = await customer.remove();
-      res.json(deletedCustomer);
+      if(customer.listOfJobs > 0){
+        return res.status(400).json({
+          message: "There are jobs associated with this customer. Delete all jobs before attempting to delete customer"
+        })
+      }else{
+        let deletedCustomer = await customer.remove();
+        res.json(deletedCustomer);
+      }
     } catch (err) {
       console.error(err);
       return res.status(500).json({

@@ -11,7 +11,7 @@ module.exports = {
       });
     } catch (err) {
       console.error(err);
-      return res.status(400).json({
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }
@@ -21,14 +21,14 @@ module.exports = {
     try {
       let employee = await Employee.findById(id);
       if (!employee)
-        return res.status('400').json({
+        return res.status(500).json({
           error: 'Employee not found',
         });
       req.employee = employee;
       next();
     } catch (err) {
       console.error(err);
-      return res.status('400').json({
+      return res.status(500).json({
         error: 'Could not retrieve employee',
       });
     }
@@ -39,7 +39,7 @@ module.exports = {
       return res.json(req.employee);
     } catch (err) {
       console.error(err);
-      return res.status(400).json({
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }
@@ -50,7 +50,7 @@ module.exports = {
       let employee = await Employee.find().populate('jobsWorked');
       res.json(employee);
     } catch (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }
@@ -64,7 +64,7 @@ module.exports = {
       res.status(200).json(employee);
     } catch (err) {
       console.error(err);
-      return res.status(400).json({
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }
@@ -78,7 +78,7 @@ module.exports = {
       });
     } catch (err) {
       console.error(err);
-      return res.status(400).json({
+      return res.status(500).json({
         error: errorHandler.getErrorMessage(err),
       });
     }
