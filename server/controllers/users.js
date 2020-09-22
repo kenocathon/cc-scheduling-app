@@ -23,7 +23,7 @@ module.exports = {
         return res.status('400').json({
           error: 'User not found',
         });
-      req.profile = user;
+      req.user = user;
       next();
     } catch (err) {
       return res.status('400').json({
@@ -85,4 +85,18 @@ module.exports = {
       });
     }
   },
+
+  checkUserRole: async(req, res) => {
+    let userId = req.body.userId;
+    let user = await User.findById(userId);
+    if (user.role === req.body.role){
+      return res.status(200).json({
+        userRole: user.role,
+      })
+    }else{
+      return res.status(401).json({
+        error: "User role is not valid"
+      })
+    }
+  }
 };

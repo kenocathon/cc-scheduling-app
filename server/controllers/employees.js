@@ -1,4 +1,6 @@
 const Employee = require('../models/Employee');
+const Job = require('../models/Job');
+const {extend, indexOf} = require('lodash');
 const errorHandler = require('../helpers/dbErrorHandler');
 
 module.exports = {
@@ -36,6 +38,7 @@ module.exports = {
 
   singleEmployee: (req, res) => {
     try {
+      console.log(req.employee)
       return res.json(req.employee);
     } catch (err) {
       console.error(err);
@@ -69,13 +72,27 @@ module.exports = {
       });
     }
   },
+  
   removeEmployee: async (req, res) => {
     try {
       let employee = req.employee;
-      let deletedEmployee = await employee.remove();
-      res.status(200).json({
-        message: `${deletedEmployee.firstName} was successfully removed from employee list`,
-      });
+      //remove the employee from any scheduled jobs they are attached to
+      const listOfJobs = await Job.find().select('scheduledEmployees')
+      // check each scheduled employee array to see if the employee Id is there
+      let indexOfEmployee
+      for (let i = 0; i > listOfJobs.length; i++){
+        if (listOfJobs[i].status !== 'Complete'){
+          for(let j = 0; j > listOfJobs[i].scheduledEmployees.length; j++){
+            if (listOfJobs[i].scheduledEmployees[j].id === req.employee.id)
+              indexOfEmployee = listOfJobs[i].scheduledEmployees.indexOf(listOfJobs[i].scheduledEmployees[j])
+              listOfJobs[i].scheduledEmployees.splice(indexOfEmployee, 1)
+          }
+        }
+      }
+      await employee.remove()
+      return res.status(200).json({
+        message: 'Employee has been deleted and removed from all incomplete jobs.'
+      })
     } catch (err) {
       console.error(err);
       return res.status(500).json({

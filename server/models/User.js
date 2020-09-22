@@ -4,12 +4,7 @@ const crypto = require('crypto');
 const UserSchema = new mongoose.Schema({
   role: {
     type: String,
-  },
-
-  userName:{
-    type: String,
-    trim: true,
-    required: 'Username is required.'
+    emum: ['admin', 'office', 'foreman']
   },
   firstName: {
     type: String,

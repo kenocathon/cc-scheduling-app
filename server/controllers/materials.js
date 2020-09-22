@@ -1,4 +1,6 @@
 const Material = require('../models/Material');
+const errorHandler = require('../helpers/dbErrorHandler')
+const {extend} = require('lodash')
 
 module.exports = {
   createSavedMaterial: async (req, res) => {
@@ -18,7 +20,7 @@ module.exports = {
 
   listSavedMaterials: async (req, res) => {
     try {
-      let materials = await Customer.find();
+      let materials = await Material.find();
       res.json(materials);
     } catch (err) {
       return res.status(500).json({

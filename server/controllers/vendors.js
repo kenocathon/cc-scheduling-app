@@ -1,5 +1,6 @@
 const Vendor = require('../models/Vendor');
 const errorHandler = require('../helpers/dbErrorHandler');
+const {extend} = require('lodash');
 
 module.exports = {
 
@@ -29,7 +30,7 @@ module.exports = {
     }
   },
 
-  vendorById: async(req, res) => {
+  vendorById: async(req, res, next, id) => {
     try {
       let vendor = await Vendor.findById(id);
       if (!vendor)
@@ -48,6 +49,7 @@ module.exports = {
 
   singleVendor: async(req, res) => {
     try {
+      console.log('request made')
       return res.json(req.vendor);
     } catch (err) {
       console.error(err);

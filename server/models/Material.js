@@ -6,6 +6,10 @@ const MaterialSchema = new mongoose.Schema({
     trim: true,
     required: "Material name is required"
   },
+  cost: {
+    type: String,
+    trim: true
+  },
   description: {
     type: String,
     trim: true,
