@@ -67,6 +67,17 @@ module.exports = {
     }
   },
 
+  todaysJobs: async (req, res) => {
+    try {
+      let todaysJobs = await Job.find({scheduledDate: req.params.date})
+      res.json(todaysJobs)
+    } catch (err) {
+      return res.status(500).json({
+        error: errorHandler.getErrorMessage(err)
+      })
+    }
+  },
+
   updateJob: async (req, res) => {
     try {
       let job = req.job;

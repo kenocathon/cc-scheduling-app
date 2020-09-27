@@ -7,8 +7,9 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import CreateSection from './CreateSection'
+import CreateSection from './Create/CreateSection'
 import Header from '../Header'
+import JobSnapshot from './JobSnapshot/JobSnap'
 
 
 
@@ -52,7 +53,7 @@ const Dashboard = () => {
     console.log(role)
     hasCorrectRole(userId, role).then(data => {
       if(!data.error){
-        setUserRole()
+        setUserRole(data.userRole)
       }
     })
   }, [])
@@ -67,7 +68,9 @@ const Dashboard = () => {
         <Container className={classes.container} maxWidth="xl">
           <CreateSection />
         </Container>
-         
+         <Container className={classes.container} maxWidth="xl">
+           <JobSnapshot/>
+         </Container>
         <Box pt={4}>
           <Copyright />
         </Box>

@@ -56,26 +56,29 @@ const JobSchema = new mongoose.Schema({
       },
     },
   ],
-  vendor: {
-    vendorName: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'vendor',
-    },
-  },
-  materials: {
-    listOfSavedMaterials: [
-      {
+  vendorList: [
+    {
+      vendor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'material',
+        ref: 'vendor',
+      },
+    }
+  ],
+  materialList: [
+      {
+        material: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'material',
+        }
       },
     ],
+
     addedMaterials: [
       {
         type: String,
         trim: true,
       },
     ],
-  },
   notes: {
     type: String,
   },

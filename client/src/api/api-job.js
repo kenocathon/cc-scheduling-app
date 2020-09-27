@@ -1,10 +1,22 @@
-const list = async (signal) => {
+const listAllJobs = async (signal) => {
   try {
     let response = await fetch('/api/user/jobs/', {
       method: 'GET',
       signal: signal,
     })
     return await response.json()
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const listTodaysJobs = async (signal, jobId) => {
+  try {
+    const today = Date.now
+    let response = await fetch('/api/user/jobs/' + today, {
+      method: 'GET',
+      signal: signal,
+    })
   } catch (err) {
     console.log(err)
   }
@@ -79,10 +91,12 @@ const remove = async (id, credentials) => {
 
 
 export {
-  list,
+  listTodaysJobs,
+  listAllJobs,
   create,
   read,
   update,
   remove,
+  
 }
 

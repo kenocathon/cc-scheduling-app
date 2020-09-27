@@ -37,6 +37,9 @@ userRouter
 //******JOB ROUTES
 userRouter.route('/jobs').post(jobCtrl.scheduleJob).get(jobCtrl.listJobs);
 
+userRouter.route('/jobs/:date')
+  .get(jobCtrl.todaysJobs)
+
 //SINGLE JOB ROUTES
 userRouter
   .route('/job/:jobId')
